@@ -1,6 +1,6 @@
 # Development Guide
 
-This document contains detailed information for developers who want to work on or understand the technical aspects of this LaTeX resume project.
+This document contains detailed information for developers who want to work on or understand the technical aspects of this LaTeX letter template.
 
 ## Local Development
 
@@ -12,20 +12,14 @@ This document contains detailed information for developers who want to work on o
 ### Building Locally
 
 ```bash
-# Build all versions in both languages (recommended)
+# Build both languages (recommended)
 make all
 
-# Build all English versions (with and without photo)
+# Build the English version
 make en
 
-# Build all French versions (with and without photo)
+# Build the French version
 make fr
-
-# Build specific versions
-make with_image          # English with photo
-make no_image           # English without photo
-make with_image_fr      # French with photo
-make no_image_fr        # French without photo
 
 # Clean auxiliary files (keeps PDFs)
 make clean
@@ -41,44 +35,26 @@ make clean-all
 - Modular architecture allows easy customization of individual components
 - **Multi-language support**: English and French versions with shared configuration and styling
 
-## Automated Compilation
-
-Every push to the `main` branch automatically:
-
-1. Compiles all resume versions (English and French, with and without photo)
-2. Creates a "latest" release with updated PDFs
-3. Stores artifacts for 30 days
-4. Provides immediate access to latest versions
-
 ## Project Structure
 
 ```
 resume/
-├── .github/workflows/
-│   └── compile-resume.yml      # CI/CD pipeline for automated builds
-├── assets/
-│   └── photo.jpg              # Profile photo asset
 ├── build/
-│   ├── resume_with_image_en.tex       # Main LaTeX file with photo (EN)
-│   ├── resume_no_image_en.tex         # Main LaTeX file without photo (EN)
-│   ├── resume_with_image_fr.tex    # Main LaTeX file with photo (FR)
-│   ├── resume_no_image_fr.tex      # Main LaTeX file without photo (FR)
+│   ├── letter_en.tex       # Main LaTeX file (EN)
+│   └── letter_fr.tex       # Main LaTeX file (FR)
 ├── src/
 │   ├── config/
 │   │   ├── packages.tex        # LaTeX package imports and configuration
 │   │   ├── style.tex           # Styling definitions and formatting
 │   │   └── commands.tex        # Custom LaTeX commands
 │   ├── content/
-│   │   ├── resume_content.tex  # Main resume content (English)
-│   │   └── resume_content_fr.tex # Main resume content (French)
+│   │   ├── letter_content_en.tex    # Main letter content (English)
+│   │   └── letter_content_fr.tex    # Main letter content (French)
 │   └── layout/
-│       ├── header_with_image.tex    # Header layout with photo (EN)
-│       ├── header_no_image.tex      # Header layout without photo (EN)
-│       ├── header_with_image_fr.tex # Header layout with photo (FR)
-│       └── header_no_image_fr.tex   # Header layout without photo (FR)
+│       ├── header_en.tex      # Header layout (EN)
+│       └── header_fr.tex      # Header layout (FR)
 ├── Makefile                   # Build automation
-├── .gitignore                 # Git ignore rules
-└── README.md                  # This file
+└── .gitignore                 # Git ignore rules
 ```
 
 ## Modular Architecture
@@ -89,25 +65,13 @@ The project uses a modular LaTeX architecture for better maintainability:
 - **Content Layer** (`src/content/`): Actual resume content with separate files per language
 - **Layout Layer** (`src/layout/`): Different header layouts for photo variants and languages
 - **Build Layer** (`build/`): Main document files that combine all modules for each version
-- **Assets** (`assets/`): Static resources like photos
 
 ### Multi-language Support
 
 - **Shared Configuration**: All languages use the same packages, styles, and commands
-- **Language-specific Content**: Separate content files for each language (`resume_content_en.tex` and `resume_content_fr.tex`)
+- **Language-specific Content**: Separate content files for each language (`letter_content_en.tex` and `letter_content_fr.tex`)
 - **Language-specific Headers**: Header files adapted for each language while maintaining the same styling
 - **Consistent Build System**: Simple `make en` and `make fr` commands to build all versions for each language
-
-## Versioning
-
-- **Latest Release**: Always contains the most recent compiled PDFs
-- **Tagged Releases**: Create a git tag (e.g., `v1.0`) to create a permanent versioned release
-
-```bash
-# Create a versioned release
-git tag v1.0
-git push origin v1.0
-```
 
 ## LaTeX Packages Used
 
@@ -137,23 +101,3 @@ git push origin v1.0
 - `iftex` - LaTeX engine detection
 - `ifthen` - Conditional statements
 - PDF/A compatibility packages for ATS parsing
-
-## Advanced Features
-
-### Conditional Compilation
-The project uses intelligent conditional compilation:
-- Photo-related packages (`graphicx`, `tikz`) are only loaded for the image version
-- Keeps the no-image version lightweight and faster to compile
-- Maintains ATS (Applicant Tracking System) compatibility
-
-### PDF Optimization
-- Machine-readable PDF generation for ATS parsing
-- Unicode character mapping for text extraction
-- Proper PDF metadata and navigation bookmarks
-- Color-coded links with professional styling
-
-### Build System
-- Automated cleanup of auxiliary LaTeX files
-- Parallel compilation support via Makefile
-- Consistent output in `build/` directory
-- Development-friendly with modular source organization
