@@ -1,0 +1,24 @@
+\documentclass[10pt, a4paper]{article}
+
+% Load configuration files (no image definition needed)
+\input{../src/config/packages.tex}
+\input{../src/config/style.tex}
+\input{../src/config/commands.tex}
+
+\begin{document}
+    \initdocument
+    
+    % Include header
+    \input{../src/layout/header_fr.tex}
+
+    % ======================================================================
+    
+    Le \todayFR
+
+    \textbf{Objet}: Candidature pour le poste de Nom du poste
+
+    % ======================================================================
+    
+    % Include letter content
+    \input{../src/content/letter_content_fr.tex}
+\end{document}

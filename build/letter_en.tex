@@ -1,0 +1,26 @@
+\documentclass[10pt, a4paper]{article}
+
+% Do not define \includeimage to exclude image-related packages and tikz
+
+% Load configuration files
+\input{../src/config/packages.tex}
+\input{../src/config/style.tex}
+\input{../src/config/commands.tex}
+
+\begin{document}
+    \initdocument
+    
+    % Include header
+    \input{../src/layout/header_en.tex}
+    
+    % ======================================================================
+    
+    On \today
+    
+    \textbf{Object}: Application for the position of Job Title
+    
+    % ======================================================================
+    
+    % Include letter content
+    \input{../src/content/letter_content_en.tex}
+\end{document}
